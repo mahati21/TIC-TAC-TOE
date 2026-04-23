@@ -1,21 +1,21 @@
 package com.tictactoe;
 
-import java.util.Scanner;
-
 public class TicTacToe {
 
-    // Method to read slot input (1–9)
-    public static int getUserSlot() {
-        Scanner scanner = new Scanner(System.in);
+    public static int[] convertToPosition(int slot) {
+        int row = (slot - 1) / 3;
+        int col = (slot - 1) % 3;
 
-        System.out.print("Enter a slot number (1-9): ");
-        int slot = scanner.nextInt();
-
-        return slot;
+        return new int[]{row, col};
     }
 
     public static void main(String[] args) {
-        int chosenSlot = getUserSlot();
-        System.out.println("You selected slot: " + chosenSlot);
+        int slot = 5; // example
+
+        int[] position = convertToPosition(slot);
+
+        System.out.println("Slot: " + slot);
+        System.out.println("Row: " + position[0]);
+        System.out.println("Column: " + position[1]);
     }
 }
