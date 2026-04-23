@@ -1,29 +1,38 @@
 package com.tictactoe;
 
+import java.util.Random;
+
 public class TicTacToe {
 
-    static char[][] board = new char[3][3];
+    static String currentPlayer;
+    static char player1Symbol;
+    static char player2Symbol;
+
+
+    public static void tossAndAssign() {
+        Random random = new Random();
+
+        int toss = random.nextInt(2); // 0 or 1
+
+        if (toss == 0) {
+            currentPlayer = "Player 1";
+            player1Symbol = 'X';
+            player2Symbol = 'O';
+        } else {
+            currentPlayer = "Player 2";
+            player1Symbol = 'O';
+            player2Symbol = 'X';
+        
+
+        System.out.println("Toss Result: " + toss);
+        System.out.println(currentPlayer + " will start first!");
+        System.out.println("Player 1 Symbol: " + player1Symbol);
+        System.out.println("Player 2 Symbol: " + player2Symbol);
+    }
 
     public static void main(String[] args) {
-        initializeBoard();
-        printBoard();
-    }
+        System.out.println("Starting Tic-Tac-Toe Game...\n");
 
-    public static void initializeBoard() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = '-';
-            }
-        }
-    }
-
-    public static void printBoard() {
-        System.out.println("Tic-Tac-Toe Board:");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
-        }
+        tossAndAssign();
     }
 }
