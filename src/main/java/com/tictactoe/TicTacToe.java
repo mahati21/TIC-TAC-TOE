@@ -1,127 +1,48 @@
 package com.tictactoe;
 
-import java.util.Scanner;
-import java.util.Random;
-
 public class TicTacToe {
 
-    static char[][] board = {
-            {'-', '-', '-'},
-            {'-', '-', '-'},
-            {'-', '-', '-'}
-    };
-
-    static boolean isHumanTurn = true;
-    static boolean gameOver = false;
-
-    static char humanSymbol = 'X';
-    static char computerSymbol = 'O';
+    static char[][] board = new char[3][3];
 
     public static void main(String[] args) {
 
-        printBoard(); // show initial board
+        board[0][0] = 'X';
+        board[0][1] = 'X';
+        board[0][2] = 'X';
 
-        while (!gameOver) {
-
-            if (isHumanTurn) {
-                playerMove();
-            } else {
-                computerMove();
-            }
-
-            printBoard();
-
-            if (checkWin()) {
-                if (isHumanTurn) {
-                    System.out.println("Human wins!");
-                } else {
-                    System.out.println("Computer wins!");
-                }
-                gameOver = true;
-            }
-            else if (isBoardFull()) {
-                System.out.println("It's a draw!");
-                gameOver = true;
-            }
-            else {
-                isHumanTurn = !isHumanTurn;
-            }
-        }
+        System.out.println(hasWon('X'));
     }
 
-    static void playerMove() {
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter position (1-9): ");
-            int slot = sc.nextInt();
-
-            int row = (slot - 1) / 3;
-            int col = (slot - 1) % 3;
-
-            if (slot >= 1 && slot <= 9 && board[row][col] == '-') {
-                board[row][col] = humanSymbol;
-                break;
-            } else {
-                System.out.println("Invalid move, try again.");
-            }
-        }
-    }
-
-    static void computerMove() {
-        Random rand = new Random();
-
-        while (true) {
-            int slot = rand.nextInt(9) + 1;
-
-            int row = (slot - 1) / 3;
-            int col = (slot - 1) % 3;
-
-            if (board[row][col] == '-') {
-                board[row][col] = computerSymbol;
-                break;
-            }
-        }
-
-        System.out.println("Computer placed '" + computerSymbol + "'");
-    }
-
-    static void printBoard() {
-        System.out.println();
-        for (int i = 0; i < 3; i++) {
-            System.out.println(board[i][0] + " " + board[i][1] + " " + board[i][2]);
-        }
-        System.out.println();
-    }
-
-    static boolean checkWin() {
+    static boolean hasWon(char symbol) {
 
         for (int i = 0; i < 3; i++) {
-
-            if (board[i][0] != '-' && board[i][0] == board[i][1] && board[i][1] == board[i][2])
+            if (board[i][0] == symbol &&
+                    board[i][1] == symbol &&
+                    board[i][2] == symbol) {
                 return true;
-
-            if (board[0][i] != '-' && board[0][i] == board[1][i] && board[1][i] == board[2][i])
-                return true;
+            }
         }
 
-        if (board[0][0] != '-' && board[0][0] == board[1][1] && board[1][1] == board[2][2])
-            return true;
+        for (int i = 0; i < 3; i++) {
+            if (board[0][i] == symbol &&
+                    board[1][i] == symbol &&
+                    board[2][i] == symbol) {
+                return true;
+            }
+        }
 
-        if (board[0][2] != '-' && board[0][2] == board[1][1] && board[1][1] == board[2][0])
+        if (board[0][0] == symbol &&
+                board[1][1] == symbol &&
+                board[2][2] == symbol) {
             return true;
+        }
+
+        if (board[0][2] == symbol &&
+                board[1][1] == symbol &&
+                board[2][0] == symbol) {
+            return true;
+        }
 
         return false;
-    }
-
-    static boolean isBoardFull() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == '-') {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }
