@@ -1,50 +1,44 @@
 package com.tictactoe;
 
-import java.util.Scanner;
+import java.util.Random;
 
 public class TicTacToe {
 
-    static char[][] board = new char[3][3];
-    public static void initializeBoard() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = ' ';
-            }
-        }
-    }
+    static char[][] board = {
+            {'-', '-', '-'},
+            {'-', '-', '-'},
+            {'-', '-', '-'}
+    };
 
-    public static boolean placeMove(int row, int col, char symbol) {
-
-        if (row < 0 || row >= 3 || col < 0 || col >= 3) {
-            System.out.println("Invalid position!");
-            return false;
-        }
-
-        if (board[row][col] != ' ') {
-            System.out.println("Cell already occupied!");
-            return false;
-        }
-
-        board[row][col] = symbol;
-        return true;
-    }
-
-    public static void printBoard() {
-        for (int i = 0; i < 3; i++) {
-            System.out.println(board[i][0] + " | " + board[i][1] + " | " + board[i][2]);
-            if (i < 2) {
-                System.out.println("--+---+--");
-            }
-        }
-    }
+    static char computerSymbol = 'O';
 
     public static void main(String[] args) {
-
-        initializeBoard();
-
-        placeMove(0, 0, 'X');
-        placeMove(1, 1, 'O');
-
+        computerMove();
         printBoard();
+    }
+
+    static void computerMove() {
+        Random rand = new Random();
+
+        while (true) {
+
+            int slot = rand.nextInt(9) + 1;
+
+            int row = (slot - 1) / 3;
+            int col = (slot - 1) % 3;
+
+            if (board[row][col] == '-') {
+                board[row][col] = computerSymbol;
+                break;
+            }
+        }
+
+        System.out.println("Computer placed '" + computerSymbol + "'");
+    }
+
+    static void printBoard() {
+        for (int i = 0; i < 3; i++) {
+            System.out.println(board[i][0] + " " + board[i][1] + " " + board[i][2]);
+        }
     }
 }
